@@ -1,2 +1,2 @@
 # Spiel
-Spiel a simple text wiever made in pwsl
+Spiel a simple text viewer made in pwsl
