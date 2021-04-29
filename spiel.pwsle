@@ -1,0 +1,105 @@
+// Spiel a simple program
+// Copyright (C) 2021 MinePossu
+//
+//    This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//
+
+
+//quick data get
+read/"get","get"
+getfile/get/"data"
+
+define/"render"
+{
+    //warp
+    clear
+	getitem/"arg_1",1/"x"
+	getitem/"arg_1",2/"y"
+    set/"rx",0/"ry",0/"rl",""
+    repeat/ys
+        calc/"ry=ry+1"
+        set/"skiprest",1
+        while/[xs > rx]
+            calc/"rx=rx+1"
+            calc/"rxx=rx+x"
+            calc/"ryy=ry+y"
+                getitem/"data",ryy/"dataryy"
+                getletter/dataryy,rxx/"outtorl"
+                if/[outtorl == ""]
+                    //set/"rl",rl," "
+                    set/"rx",xs
+                    calc/"rx=rx+1"
+                else
+                    set/"rl",rl,outtorl
+                endif
+        endloop
+        print/rl,\n
+        set/"rl",""/"rx",0
+    endloop
+    print/"Press Q to quit. "
+   // endwarp
+}
+
+
+set/"xs",25
+set/"ys",18
+set/"camx",0
+set/"camy",0
+set/"brexit",0
+set/"Rerender",1
+
+
+while/[brexit == 0]
+    if/[Rerender == 1]
+        render/camx,camy
+        set/"Rerender",0
+    else
+        //control stuff
+        //key for ifs gotten here
+        getkey/"keys"
+        getitem/"keys",1/"key"
+        //ifs here
+
+        //right key
+        set/"ckey","right arrow"
+        if/[key == ckey]
+            calc/"camx=camx+1"
+            set/"rerender",1
+        endif
+        //down key
+        set/"ckey","down arrow"
+        if/[key == ckey]
+            calc/"camy=camy+1"
+            set/"rerender",1
+        endif
+        //up key
+        set/"ckey","up arrow"
+        if/[key == ckey]
+            calc/"camy=camy-1"
+            set/"rerender",1
+        endif
+        //left key
+        set/"ckey","left arrow"
+        if/[key == ckey]
+            calc/"camx=camx-1"
+            set/"rerender",1
+        endif
+        //quit
+        set/"ckey","q"
+        if/[key == ckey]
+            set/"brexit",1
+        endif
+    endif
+//render/camx,camy
+endloop
